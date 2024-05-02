@@ -64,10 +64,9 @@ Parameters we choose:
 - TypeScript: YES
 - ESLint: YES
 - Tailwind CSS: NO //we will use MaterialUI
-- use `/src` directory: YES // we want to separate the source code from the configuration files
+- use `/src` directory: NO 
 - App Router: YES // we will use Next.js router
-- import alias (@/*): YES 
-- import alias: @/* // we use default alias
+- import alias (@/*): NO
 
 ## Step 4: Reconfigure docker-compose
 
