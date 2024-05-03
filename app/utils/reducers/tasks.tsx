@@ -1,17 +1,18 @@
 'use client'
 import React, { createContext, useContext, useReducer } from 'react';
-import { Task } from '../types/task';
+import { NewTask, Task } from '../types/task';
 import { Time } from '../types/time';
 import { STATUS } from '../types/status';
 import { tasks as mockedTasks } from '../../mocks/tasks.mock';
+import { v4 as uuid } from 'uuid';
 
 interface TasksContextType {
-  tasks: Task[];
+  tasks: NewTask[];
   dispatch: React.Dispatch<Action>;
 }
 
 type Action =
-  | { type: 'ADD_TASK'; task: Task }
+  | { type: 'ADD_TASK'; task: NewTask }
   | { type: 'DELETE_TASK'; taskId: string }
   | { type: 'ADD_TIME'; taskId: string; time: Time }
   | { type: 'CHANGE_STATUS'; taskId: string; status: STATUS };
@@ -21,7 +22,8 @@ const TasksContext = createContext<TasksContextType | undefined>(undefined);
 const taskReducer = (state: Task[], action: Action): Task[] => {
   switch (action.type) {
     case 'ADD_TASK':
-      return [...state, action.task];
+      const newTask: Task = { ...action.task, id: uuid(), times: [], status: STATUS.TODO };
+      return [...state, newTask];
     case 'DELETE_TASK':
       return state.filter(task => task.id !== action.taskId);
     case 'ADD_TIME':

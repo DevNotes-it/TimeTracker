@@ -28,7 +28,6 @@ export default function RootLayout({
             <ThemeProvider theme={darkTheme}>
               <CssBaseline />
               <Container maxWidth="md">
-                <Header />
                 {children}
               </Container>
             </ThemeProvider>

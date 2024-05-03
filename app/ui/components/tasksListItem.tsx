@@ -1,13 +1,15 @@
-import { Task } from '@/utils/types/task';
-import { IconButton, ListItem, ListItemText, Typography, styled } from '@mui/material';
+import { Box, Grid, IconButton, ListItem, ListItemText, Stack, Typography, styled } from '@mui/material';
 import {
   Delete as DeleteIcon,
   AccessTime as TimerIcon,
   Start as StartIcon,
   StopCircle as StopIcon,
 } from '@mui/icons-material';
-import React from 'react'
+import React, { useState } from 'react'
 import { STATUS } from '@/utils/types/status';
+import { useTasksReducer } from '@/utils/reducers/tasks';
+import { TimeList } from './timeList';
+import { Task } from '@/utils/types/task';
 
 
 const TaskListItem = styled(ListItem)(({ theme }) => ({
@@ -24,41 +26,89 @@ type TasksListItemProps = {
 }
 
 export const TasksListItem = ({ task }: TasksListItemProps) => {
+  const [showTimes, setShowTimes] = useState(false)
+  const { dispatch } = useTasksReducer()
+
+  const startTask = (id: string) => {
+    dispatch({ type: 'CHANGE_STATUS', taskId: id, status: STATUS.IN_PROGRESS })
+  }
+
+  const finishTask = (id: string) => {
+    dispatch({ type: 'CHANGE_STATUS', taskId: id, status: STATUS.DONE })
+  }
+
+  const deleteTask = (id: string) => {
+    dispatch({ type: 'DELETE_TASK', taskId: id })
+  }
+
+  const toggleShowTimes = () => {
+    setShowTimes(!showTimes)
+  }
+
   return (
-    <TaskListItem
-      secondaryAction={
-        <>
+    <TaskListItem>
+      <Grid container>
+        <Grid item xs={8}>
+          <ListItemText
+            primary={`${task.code} ::  ${task.title} ( ${task?.times?.reduce((acc, time) => acc, 0)} hours)`}
+            secondary={`${task.description}`}
+          />
+        </Grid>
+        {/* BUTTONS */}
+        <Grid item xs={4} style={{ textAlign: 'right' }}>
           {
             task.status === STATUS.TODO &&
-            <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Start'>
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              style={{ margin: '0.5rem' }}
+              title='Start'
+              onClick={() => startTask(task.id)}
+            >
               <StartIcon />
             </IconButton>
           }
           {
+            [STATUS.IN_PROGRESS, STATUS.DONE].includes(task.status) &&
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              style={{ margin: '0.5rem' }}
+              title='Show Registered time'
+              onClick={() => toggleShowTimes()}
+            >
+              <TimerIcon />
+            </IconButton>
+          }
+          {
             task.status === STATUS.IN_PROGRESS &&
-            <>
-              <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Register time'>
-                <TimerIcon />
-              </IconButton>
-              <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Close task'>
-                <StopIcon />
-              </IconButton>
-            </>
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              style={{ margin: '0.5rem' }}
+              title='Close task'
+              onClick={() => finishTask(task.id)}
+            >
+              <StopIcon />
+            </IconButton>
           }
           {
             task.status !== STATUS.IN_PROGRESS &&
-            <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Delete task'>
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              style={{ margin: '0.5rem' }}
+              title='Delete task'
+              onClick={() => deleteTask(task.id)}
+            >
               <DeleteIcon />
             </IconButton>
           }
-        </>
-      }
-    >
-      <ListItemText
-        primary={`${task.code} ::  ${task.title} ( ${task.times.reduce((acc, time) => acc, 0)} hours)`}
-        secondary={`${task.description}`}
-      />
+        </Grid>
 
+
+        {showTimes && <Grid item xs={12}><TimeList times={task.times} taskID={task.id} /></Grid>}
+      </Grid>
     </TaskListItem>
 
   )

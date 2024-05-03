@@ -53,14 +53,19 @@ Start development enviroment by running:
 npm install @mui/material-nextjs @mui/material @emotion/cache @emotion/react @emotion/styled @mui/icons-material
 ```
 
-**ReactForms** for form handling
-```bash
-npm install @tanstack/react-query
-```
-
 **Zod** for validation
 ```bash
-npm install zod
+npm install zod 
+```
+
+**ReactForm** for form handling
+```bash
+npm install react-hook-form @hookform/resolvers
+```
+
+**ReactQuery** for communication with API
+```bash
+npm install @tanstack/react-query
 ```
 
 **luxon** for date handling
@@ -133,5 +138,20 @@ In `ui/components` prepare components:
 - `tasksListItem.tsx` - which contain single task with time spent input, add time button, change status (start, end task if not `Done`) and delete button
 
 
+### Create TaskForm component
 
-  
+In `ui/components` prepare components:
+- `taskForm.tsx` - which contain form which uses `react-hook-form` to handle form state and validation using `zod` schema
+
+### Add actions to change statuses 
+
+When clicking proper button in `tasksListItem` component, proper action should be dispatched to change task status:
+- when start then status is set to `IN_PROGRESS`
+- when end then status is set to `DONE`
+- when delete then task is removed from list
+
+### Add actions to add time to task
+
+When clicking add time button in `tasksListItem` component, list of registered times for that task is expanded bellow this task. 
+On top there is a form to add time spent on task. After submitting form, time is added to task and total time spent on task is updated.
+

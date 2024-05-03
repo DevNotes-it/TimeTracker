@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
+type HeaderProps = {
+  showAddTaskButton: boolean;
+  addTaskAction: (value: boolean) => void;
+}
 
-export const Header = () => {
+export const Header = ({ showAddTaskButton, addTaskAction }: HeaderProps) => {
+
+  const onAddTaskButtonClick = (e: FormEvent) => {
+    e.preventDefault()
+    addTaskAction(true)
+  }
 
   return (
     <Box
@@ -21,7 +30,10 @@ export const Header = () => {
           </Typography>
         </Grid>
         <Grid item lg={4} style={{ textAlign: 'right' }}>
-          <Button variant="contained" color="primary" href="/tasks">Add task</Button>
+          {
+            showAddTaskButton &&
+            <Button variant="contained" color="primary" onClick={onAddTaskButtonClick}>Add task</Button>
+          }
         </Grid>
       </Grid>
     </Box>
