@@ -1,7 +1,13 @@
 import { Task } from '@/utils/types/task';
-import { IconButton, ListItem, ListItemText, Paper, styled } from '@mui/material';
-import { Delete as DeleteIcon, AccessTime as TimerIcon } from '@mui/icons-material';
+import { IconButton, ListItem, ListItemText, styled } from '@mui/material';
+import {
+  Delete as DeleteIcon,
+  AccessTime as TimerIcon,
+  Start as StartIcon,
+  StopCircle as StopIcon,
+} from '@mui/icons-material';
 import React from 'react'
+import { STATUS } from '@/utils/types/status';
 
 
 const TaskListItem = styled(ListItem)(({ theme }) => ({
@@ -22,12 +28,29 @@ export const TasksListItem = ({ task }: TasksListItemProps) => {
     <TaskListItem
       secondaryAction={
         <>
-          <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} >
-            <TimerIcon />
-          </IconButton>
-          <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }}>
-            <DeleteIcon />
-          </IconButton>
+          {
+            task.status === STATUS.TODO &&
+            <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Start'>
+              <StartIcon />
+            </IconButton>
+          }
+          {
+            task.status === STATUS.IN_PROGRESS &&
+            <>
+              <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Register time'>
+                <TimerIcon />
+              </IconButton>
+              <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Close task'>
+                <StopIcon />
+              </IconButton>
+            </>
+          }
+          {
+            task.status !== STATUS.IN_PROGRESS &&
+            <IconButton edge="end" aria-label="delete" style={{ margin: '0.5rem' }} title='Delete task'>
+              <DeleteIcon />
+            </IconButton>
+          }
         </>
       }
     >

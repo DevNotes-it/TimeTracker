@@ -8,7 +8,7 @@ import { DateTime } from 'luxon';
  * or user can provide only duration then start and end time will be empty
  * @param start - start time
  * @param end - end time
- * @param duration - duration in seconds
+ * @param duration - duration in minutes
  */
 export const TimeSchema = z.object({
   start: z.optional(z.date()),
