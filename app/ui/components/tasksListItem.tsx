@@ -1,5 +1,5 @@
 import { Task } from '@/utils/types/task';
-import { IconButton, ListItem, ListItemText, styled } from '@mui/material';
+import { IconButton, ListItem, ListItemText, Typography, styled } from '@mui/material';
 import {
   Delete as DeleteIcon,
   AccessTime as TimerIcon,
@@ -54,7 +54,11 @@ export const TasksListItem = ({ task }: TasksListItemProps) => {
         </>
       }
     >
-      <ListItemText primary={task.title} secondary={task.status} />
+      <ListItemText
+        primary={`${task.code} ::  ${task.title} ( ${task.times.reduce((acc, time) => acc, 0)} hours)`}
+        secondary={`${task.description}`}
+      />
+
     </TaskListItem>
 
   )
