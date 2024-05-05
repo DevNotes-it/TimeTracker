@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useContext, useReducer } from 'react';
 import { NewTask, Task } from '../types/task';
-import { Time } from '../types/time';
+import { NewTime, Time } from '../types/time';
 import { STATUS } from '../types/status';
 import { tasks as mockedTasks } from '../../mocks/tasks.mock';
 import { v4 as uuid } from 'uuid';
@@ -14,7 +14,7 @@ interface TasksContextType {
 type Action =
   | { type: 'ADD_TASK'; task: NewTask }
   | { type: 'DELETE_TASK'; taskId: string }
-  | { type: 'ADD_TIME'; taskId: string; time: Time }
+  | { type: 'ADD_TIME'; taskId: string; time: NewTime }
   | { type: 'CHANGE_STATUS'; taskId: string; status: STATUS };
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
@@ -27,7 +27,8 @@ const taskReducer = (state: Task[], action: Action): Task[] => {
     case 'DELETE_TASK':
       return state.filter(task => task.id !== action.taskId);
     case 'ADD_TIME':
-      return state.map(task => task.id === action.taskId ? { ...task, times: [...task.times, action.time] } : task);
+      const newTime = { ...action.time, id: uuid() };
+      return state.map(task => task.id === action.taskId ? { ...task, times: [...task.times, newTime] } : task);
     case 'CHANGE_STATUS':
       return state.map(task => task.id === action.taskId ? { ...task, status: action.status } : task);
     default:
