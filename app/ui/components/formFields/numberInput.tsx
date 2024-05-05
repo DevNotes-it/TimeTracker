@@ -1,15 +1,15 @@
-import { Input, TextField } from '@mui/material';
+import { Input, TextField, TextFieldProps } from '@mui/material';
 import React from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 type TextInputProps = {
   name: string;
   label: string;
-  useFullWidth: boolean;
-  size: 'small' | 'normal';
+  useFullWidth?: boolean;
+  size?: TextFieldProps['size'];
 }
 
-export const NumberInput = ({ name, label, size = 'normal', useFullWidth = true }: TextInputProps) => {
+export const NumberInput = ({ name, label, size = 'normal' as TextFieldProps['size'], useFullWidth = true }: TextInputProps) => {
   const { control } = useFormContext()
 
   return (

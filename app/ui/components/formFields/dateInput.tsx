@@ -6,11 +6,9 @@ import { Controller, useFormContext } from 'react-hook-form'
 type DateTimeInputProps = {
   name: string;
   label: string;
-  useFullWidth: boolean;
-  size: 'small' | 'normal';
 }
 
-export const DateTimeInput = ({ name, label, size = 'normal', useFullWidth = true }: DateTimePickerProps) => {
+export const DateTimeInput = ({ name, label }: DateTimeInputProps) => {
   const { control } = useFormContext()
 
   return (
@@ -28,13 +26,7 @@ export const DateTimeInput = ({ name, label, size = 'normal', useFullWidth = tru
           <DateTimePicker
             value={value}
             label={label}
-            helperText={error ? error.message : null}
-            error={!!error}
             onChange={(e) => { console.log(e); onChange(e); }}
-            margin='normal'
-            variant="outlined"
-            size={size}
-            fullWidth={useFullWidth}
           />
           {error && <Typography color='error'>{error.message}</Typography>}
         </Stack>

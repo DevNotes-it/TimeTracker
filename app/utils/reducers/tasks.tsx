@@ -7,7 +7,7 @@ import { tasks as mockedTasks } from '../../mocks/tasks.mock';
 import { v4 as uuid } from 'uuid';
 
 interface TasksContextType {
-  tasks: NewTask[];
+  tasks: Task[];
   dispatch: React.Dispatch<Action>;
 }
 

@@ -37,14 +37,14 @@ export const TimeForm = ({ taskId }: TimeFormProps) => {
 
   return (
     <Card style={{ padding: '1rem', marginBottom: '2rem' }}>
-      <Typography variant="p" component="p" gutterBottom>
+      <Typography gutterBottom>
         Add Time
       </Typography>
       <FormProvider {...formMethods}>
         <form onSubmit={formMethods.handleSubmit(data => onSubmit(taskId, data))}>
           <Stack direction="row" spacing={2}>
-            <DateTimeInput name="start" label="Start" useFullWidth={false} size={'small'} />
-            <NumberInput name="duration" label="Duration (minutes)" useFullWidth={false} size={'small'} />
+            <DateTimeInput name="start" label="Start" />
+            <NumberInput name="duration" label="Duration (minutes)" />
             <Button variant="contained" type='submit' size='small'>Add</Button>
           </Stack>
         </form>
