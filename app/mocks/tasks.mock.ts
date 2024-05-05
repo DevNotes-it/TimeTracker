@@ -1,5 +1,5 @@
 import { STATUS } from '@/utils/types/status';
-import { Duration } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { v4 as uuid } from 'uuid';
 
 export const tasks = [
@@ -20,18 +20,16 @@ export const tasks = [
     times: [
       {
         id: uuid(),
-        start: new Date('2021-10-02T08:00:00Z'),
-        end: new Date('2021-10-02T09:00:00Z'),
+        start: DateTime.fromISO('2021-10-02T08:00:00Z'),
+        end: DateTime.fromISO('2021-10-02T09:00:00Z'),
+        duration: Duration.fromObject({ hours: 1 }).as('minutes'),
       },
       {
         id: uuid(),
-        start: new Date('2021-10-03T10:00:00Z'),
-        end: new Date('2021-10-03T11:00:00Z'),
+        start: DateTime.fromISO('2021-10-03T10:00:00Z'),
+        end: DateTime.fromISO('2021-10-03T11:00:00Z'),
+        duration: Duration.fromObject({ hours: 1 }).as('minutes'),
       },
-      {
-        id: uuid(),
-        duration: Duration.fromObject({ hours: 1 }).as('seconds'),
-      }
     ],
   },
   {
@@ -43,13 +41,15 @@ export const tasks = [
     times: [
       {
         id: uuid(),
-        start: new Date('2021-10-01T08:00:00Z'),
-        end: new Date('2021-10-01T09:00:00Z'),
+        start: DateTime.fromISO('2021-10-01T08:00:00Z'),
+        end: DateTime.fromISO('2021-10-01T09:00:00Z'),
+        duration: Duration.fromObject({ hours: 1 }).as('minutes'),
       },
       {
         id: uuid(),
-        start: new Date('2021-10-01T10:00:00Z'),
-        end: new Date('2021-10-01T11:00:00Z'),
+        start: DateTime.fromISO('2021-10-01T10:00:00Z'),
+        end: DateTime.fromISO('2021-10-01T11:00:00Z'),
+        duration: Duration.fromObject({ hours: 1 }).as('minutes'),
       },
     ],
   },

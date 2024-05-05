@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { Input, TextField } from '@mui/material';
 import React from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
@@ -9,7 +9,7 @@ type TextInputProps = {
   size: 'small' | 'normal';
 }
 
-export const TextInput = ({ name, label, size = 'normal', useFullWidth = true }: TextInputProps) => {
+export const NumberInput = ({ name, label, size = 'normal', useFullWidth = true }: TextInputProps) => {
   const { control } = useFormContext()
 
   return (
@@ -33,6 +33,7 @@ export const TextInput = ({ name, label, size = 'normal', useFullWidth = true }:
           variant="outlined"
           size={size}
           fullWidth={useFullWidth}
+          type="number"
         />
       )}
     />

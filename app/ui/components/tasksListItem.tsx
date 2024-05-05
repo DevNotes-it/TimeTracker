@@ -10,6 +10,7 @@ import { STATUS } from '@/utils/types/status';
 import { useTasksReducer } from '@/utils/reducers/tasks';
 import { TimeList } from './timeList';
 import { Task } from '@/utils/types/task';
+import { Duration } from 'luxon';
 
 
 const TaskListItem = styled(ListItem)(({ theme }) => ({
@@ -50,7 +51,7 @@ export const TasksListItem = ({ task }: TasksListItemProps) => {
       <Grid container>
         <Grid item xs={8}>
           <ListItemText
-            primary={`${task.code} ::  ${task.title} ( ${task?.times?.reduce((acc, time) => acc, 0)} hours)`}
+            primary={`${task.code} ::  ${task.title} ( ${Duration.fromMillis(task?.times?.reduce((acc, time) => acc + time.duration, 0) * 60 * 1000).toFormat("h'h' m'min'")} )`}
             secondary={`${task.description}`}
           />
         </Grid>
@@ -107,7 +108,7 @@ export const TasksListItem = ({ task }: TasksListItemProps) => {
         </Grid>
 
 
-        {showTimes && <Grid item xs={12}><TimeList times={task.times} taskID={task.id} /></Grid>}
+        {showTimes && <Grid item xs={12}><TimeList times={task.times} taskId={task.id} /></Grid>}
       </Grid>
     </TaskListItem>
 

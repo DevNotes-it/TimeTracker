@@ -23,15 +23,14 @@ Our app must allow users to:
     - task title 
     - task description
     - total time spent on task
-    - input for time spent on task (visible only for `IN_PROGRESS` tasks)
-    - add time button (visible only for `IN_PROGRESS` tasks)
+    - "track time" button to open list of times and form to register new time ( form visible only for `IN_PROGRESS` tasks)
     - close button (visible only for `TODO` and `IN_PROGRESS` tasks)
 
-2. User can filter tasks by title and status (open/closed - default is open)
+2. User can filter tasks by title and statuses
 3. User can add new task by clicking add button which shows form that contains task code, title and description. Submitting form adds task as open and is visible on top of the list. 
 4. User can add time spent on task by entering time in minutes into input which is located next to the task. Submitting form adds time to task and updates total time spent on task.
-5. User 
-6. User can close task
+5. User can close task
+6. User can delete task only those that are not started or are closed
 
 ## Technical requirements
 
@@ -39,6 +38,17 @@ Our app must allow users to:
 - Use MaterialUI for styling
 - Use ReactForms for form handling
 - Use Zod for validation
+
+## Basic Designs
+
+Main view
+![App Basic Design](./docs/images/AppBasicDesign.jpg)
+
+New Task
+![New Task Design](./docs/images/NewTaskForm.jpg)
+
+Time Entries / Form
+![Time Entries Design](./docs/images/TimeListAndForm.jpg)
 
 ## Implementation
 
@@ -50,7 +60,7 @@ Start development enviroment by running:
 
 **MaterialUI** for styled components
 ```bash
-npm install @mui/material-nextjs @mui/material @emotion/cache @emotion/react @emotion/styled @mui/icons-material
+npm install @mui/material-nextjs @mui/material @emotion/cache @emotion/react @emotion/styled @mui/icons-material @mui/x-date-pickers
 ```
 
 **Zod** for validation
@@ -105,9 +115,8 @@ In short:
 Create types in `utils/types` using `zod` for validation:
 - `status.ts` - ENUM with status values: `TODO`, `IN_PROGRESS`, `DONE`
 
-- `time.ts` - Time type with validation: when start and end time, then duration is calculated, or when duration is provided then start and end are empty
-  - `start` - start time as `Date`
-  - `end` - end time as `Date`
+- `time.ts` - Time type with validation:
+  - `start` - start time as `DateTime` from `luxon`
   - `duration` - duration in minutes as number
 
 - `task.ts` - Task type with validation schema which:
@@ -154,4 +163,5 @@ When clicking proper button in `tasksListItem` component, proper action should b
 
 When clicking add time button in `tasksListItem` component, list of registered times for that task is expanded bellow this task. 
 On top there is a form to add time spent on task. After submitting form, time is added to task and total time spent on task is updated.
+
 

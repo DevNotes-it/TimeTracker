@@ -19,7 +19,6 @@ export const TaskForm = ({ hideTaskFormAction }: TaskFormProps) => {
   })
 
   const onSubmit = (data: NewTask) => {
-    console.log('Submitted data:', data)
     dispatch({ type: 'ADD_TASK', task: data })
     formMethods.reset()
     hideTaskFormAction()
